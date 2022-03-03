@@ -38,9 +38,10 @@ button_r.irq(trigger=machine.Pin.IRQ_FALLING, handler=button_handler)
 button_g.irq(trigger=machine.Pin.IRQ_FALLING, handler=button_handler)
 button_b.irq(trigger=machine.Pin.IRQ_FALLING, handler=button_handler)
 
-neoPixel = neopixel.NeoPixel(machine.Pin(28), NUM_LEDS, bpp=4)
+neoPixel = neopixel.NeoPixel(machine.Pin(28), NUM_LEDS, bpp=3)
 
-BRIGHTNESS_LEVEL = 64
+# Brightness level can be raised to 255 if you would like to go blind
+BRIGHTNESS_LEVEL = 8
 def getBrightness(color):
     if color:
         return BRIGHTNESS_LEVEL
@@ -49,12 +50,6 @@ def getBrightness(color):
 
 print("now you go! Use buttons on GP20, GP21, GP22!")
 while True:
-    brightness = 0
-    if led_r:
-        brightness = 64
-    elif led_g:
-        brightness = 64
-    elif led_b:
-        brightness = 64
-    neoPixel[0] = (getBrightness(led_r), getBrightness(led_g), getBrightness(led_b), brightness)
+    neoPixel[0] = (getBrightness(led_r), getBrightness(led_g), getBrightness(led_b))
     neoPixel.write() # Output the colors to the led(s)
+    utime.sleep(0.1)
